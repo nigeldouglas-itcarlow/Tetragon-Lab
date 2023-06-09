@@ -114,10 +114,18 @@ Let's then open a new terminal window to monitor the events from the overly-perm
 kubectl logs -n kube-system -l app.kubernetes.io/name=tetragon -c export-stdout -f | tetra getevents -o compact --namespace default --pod test-pod-1
 ```
 
+We are already alerted on the fact that our pod has elevated admin privileges - ```CAP_SYS_ADMIN```
+<img width="1416" alt="Screenshot 2023-06-09 at 20 31 14" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/f31065a1-4081-43ee-9e7f-354e384df9f2">
+
+
 In the first window, terminal shell into the overly-permissive pod:
 ```
 kubectl exec -it test-pod-1 -- bash
 ```
+We receive a bunch of process activity after we shell into the pod. <br/>
+However, the data is not so usefil in its current state.
+<img width="1416" alt="Screenshot 2023-06-09 at 20 33 20" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/d9ab78ab-3dd3-405f-8391-0ced449d4bcc">
+
 
 Download the ```xmrig``` binary from the official Github repository:
 ```
