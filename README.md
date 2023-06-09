@@ -72,6 +72,19 @@ cilium status --wait
 echo -e "*****\n  export KUBECONFIG=${KUBECONFIG} \n*****"
 ```
 
+## Deploy Tetragon
+To install and deploy Tetragon, run the following commands:
+```
+helm repo add cilium https://helm.cilium.io
+helm repo update
+helm install tetragon cilium/tetragon -n kube-system
+kubectl rollout status -n kube-system ds/tetragon -w
+```
+
+<img width="1105" alt="Screenshot 2023-06-09 at 20 10 21" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/1a8cf86e-b826-476b-825a-ce9ace72c609">
+
+
+
 ## Background Checks
 
 Confirm that ```AWS CLI``` is connected to your ```EKS Cluster``` in order to work from terminal. 
