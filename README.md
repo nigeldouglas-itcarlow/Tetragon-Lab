@@ -6,11 +6,11 @@ Lab documentation for testing Tetragon Security Capabilities <br/>
 ```
 #!/usr/bin/env bash
 
-export CLUSTER_NAME="${USER}-cilium"
-export AWS_DEFAULT_REGION="eu-central-1"
+export CLUSTER_NAME="nigel-eks-cluster"
+export AWS_DEFAULT_REGION="eu-west-1"
 export KUBECONFIG="/tmp/kubeconfig-${CLUSTER_NAME}.conf"
 
-export TAGS="Owner=petr.ruzicka@gmail.com Environment=dev"
+export TAGS="Owner=C00292053@itcarlow.ie Environment=staging"
 
 set -euxo pipefail
 
@@ -29,9 +29,9 @@ managedNodeGroups:
     amiFamily: AmazonLinux2
     # amiFamily: Bottlerocket
     instanceType: t3a.medium
-    desiredCapacity: 2
+    desiredCapacity: 1
     privateNetworking: true
-    minSize: 2
+    minSize: 0
     maxSize: 3
     volumeSize: 20
     volumeType: gp3
@@ -40,7 +40,7 @@ managedNodeGroups:
       <<: *tags
       compliance:na:defender: eks-node
       # compliance:na:defender: bottlerocket
-    volumeEncrypted: true
+    volumeEncrypted: false
     disableIMDSv1: true
     taints:
     - key: "node.cilium.io/agent-not-ready"
