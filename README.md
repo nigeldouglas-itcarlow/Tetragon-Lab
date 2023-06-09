@@ -66,3 +66,21 @@ cilium status --wait
 echo -e "*****\n  export KUBECONFIG=${KUBECONFIG} \n*****"
 ```
 
+## Background Checks
+
+Confirm that ```AWS CLI``` is connected to your ```EKS Cluster``` in order to work from terminal. 
+```
+aws configure --profile nigel-aws-profile
+export AWS_PROFILE=nigel-aws-profile                                            
+aws sts get-caller-identity --profile nigel-aws-profile
+aws eks update-kubeconfig --region eu-west-1 --name nigel-eks-cluster
+```
+
+Remember to scale-down the cluster to ```0 Nodes``` or ```delete the cluster``` when unused.
+```
+eksctl get cluster
+eksctl get nodegroup --cluster nigel-eks-cluster
+eksctl scale nodegroup --cluster nigel-eks-cluster --name ng-6194909f --nodes 0
+eksctl delete cluster --name nigel-eks-cluster  
+```
+
