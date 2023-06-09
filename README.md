@@ -83,6 +83,28 @@ kubectl rollout status -n kube-system ds/tetragon -w
 
 <img width="1105" alt="Screenshot 2023-06-09 at 20 10 21" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/1a8cf86e-b826-476b-825a-ce9ace72c609">
 
+## Create a Privileged Pod
+```
+kubectl apply -f https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/privileged-pod.yaml
+```
+
+<img width="1105" alt="Screenshot 2023-06-09 at 20 13 55" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/07e33971-351c-4b81-84ba-f9b4d1099605">
+
+## Detect Cryptomining using Tetragon
+Enable visibility to capability & namespace changes via the ```configmap``` by setting ```enable-process-cred``` and ```enable-process-ns``` to ```true```:
+```
+kubectl edit cm -n kube-system tetragon-config
+```
+
+Restart the Tetragon daemonset to enforce those changes:
+```
+kubectl rollout restart -n kube-system ds/tetragon
+```
+
+Let's then open a new terminal window to monitor the events from the overly-permissive pod:
+```
+kubectl logs -n kube-system -l app.kubernetes.io/name=tetragon -c export-stdout -f | tetra getevents --namespace default --pod test-pod-1
+```
 
 
 ## Background Checks
