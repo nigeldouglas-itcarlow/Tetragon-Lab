@@ -89,4 +89,21 @@ eksctl get nodegroup --cluster nigel-eks-cluster
 eksctl scale nodegroup --cluster nigel-eks-cluster --name ng-6194909f --nodes 0
 eksctl delete cluster --name nigel-eks-cluster  
 ```
-
+## Installation Workflow
+There is actually an operator that installs the CRD, so you need to update the operator container image that will include the new CRD as well. 
+```
+helm -n kube-system upgrade \
+--install tetragon cilium/tetragon \
+--set tetragon.image.override=quay.io/cilium/tetragon-ci:latest \
+--set tetragonOperator.image.override=quay.io/cilium/tetragon-operator-ci:latest \
+--set imagePullPolicy=Always
+```
+Need to make sure that the CRDs are updated <br/>
+You can delete them and restart the tetragon pod if they are not. <br/>
+<br/>
+Looks like you need to delete the old CRD created from earlier run of Tetra:
+```
+kubectl delete crd tracingpoliciesnamespaced.cilium.io
+kubectl delete crd tracingpolicies.cilium.io
+```
+and reinstall Tetra should allow you to create network policy.
