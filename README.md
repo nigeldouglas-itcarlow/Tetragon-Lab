@@ -175,6 +175,11 @@ After enabling TracingPolicy, I have far more insight into when files are opened
 
 <img width="1416" alt="Screenshot 2023-06-09 at 20 43 27" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/40e48e36-ec51-4a87-84f5-07d12d7287ec">
 
+When my shell session did crash, probably due to the sleep configuration, it sent the ```SIGKILL``` action:
+
+<img width="1416" alt="Screenshot 2023-06-09 at 20 47 14" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/9d27c956-6515-43b0-b6ed-59257b07eabf">
+
+
 
 ## Monitoring Network Activity
 
