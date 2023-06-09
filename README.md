@@ -171,6 +171,10 @@ After performing each of the tasks, we realize that further testing is required:
 kubectl apply -f https://raw.githubusercontent.com/cilium/tetragon/main/examples/tracingpolicy/sys_write_follow_fd_prefix.yaml
 ```
 
+After enabling TracingPolicy, I have far more insight into when files are opened/closed - which is a good start:
+
+<img width="1416" alt="Screenshot 2023-06-09 at 20 43 27" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/40e48e36-ec51-4a87-84f5-07d12d7287ec">
+
 
 ## Monitoring Network Activity
 
