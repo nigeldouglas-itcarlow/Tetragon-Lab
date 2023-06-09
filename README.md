@@ -1,7 +1,13 @@
 # Tetragon-Lab
 Lab documentation for testing Tetragon Security Capabilities <br/>
 <br/>
-### Create a Lab Environment for Tetragon
+### Create a Lab Environment for Tetragon [without Cilium]
+Run the below eksctl command to create a minimal one node EKS cluster
+```
+eksctl create cluster nigel-eks-cluster --node-type t3.xlarge --nodes=1 --nodes-min=0 --nodes-max=3 --max-pods-per-node 58
+```
+### Create a Lab Environment for Tetragon [with Cilium as the CNI]
+Run the below eksctl command to create a one-node cluster using the optimized ```Bottlerocket AMI``` that was designed for eBPF.
 
 ```
 #!/usr/bin/env bash
