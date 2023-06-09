@@ -6,6 +6,12 @@ Run the below eksctl command to create a minimal one node EKS cluster
 ```
 eksctl create cluster nigel-eks-cluster --node-type t3.xlarge --nodes=1 --nodes-min=0 --nodes-max=3 --max-pods-per-node 58
 ```
+
+This process can take a good 10 mins to complete:
+
+<img width="1105" alt="Screenshot 2023-06-09 at 20 00 43" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/a62527e7-80dc-4002-8e81-1c31a1f3f172">
+
+
 ### Create a Lab Environment for Tetragon [with Cilium as the CNI]
 Run the below eksctl command to create a one-node cluster using the optimized ```Bottlerocket AMI``` that was designed for eBPF.
 
