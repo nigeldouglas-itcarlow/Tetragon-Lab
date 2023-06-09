@@ -132,6 +132,12 @@ Download the ```xmrig``` binary from the official Github repository:
 curl -OL https://github.com/xmrig/xmrig/releases/download/v6.16.4/xmrig-6.16.4-linux-static-x64.tar.gz
 ```
 
+We are definitely seeing the activity in realtime. <br/>
+However, the only context is that the process started and then there was an exit:
+
+<img width="1416" alt="Screenshot 2023-06-09 at 20 35 04" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/f4c6abc8-f556-4ae4-8afb-a48ce186464c">
+
+
 Unzip the tarbal package to access the malicious files:
 ```
 tar -xvf xmrig-6.16.4-linux-static-x64.tar.gz
@@ -153,6 +159,18 @@ Run the cryptominer in background mode (this won't show anything in your shell)
 ```
 ./xmrig --donate-level 8 -o xmr-us-east1.nanopool.org:14433 -u 422skia35WvF9mVq9Z9oCMRtoEunYQ5kHPvRqpH1rGCv1BzD5dUY4cD8wiCMp4KQEYLAN1BuawbUEJE99SNrTv9N9gf2TWC --tls --coin monero
 ```
+
+After performing each of the tasks, we realize that further testing is required:
+
+<img width="1416" alt="Screenshot 2023-06-09 at 20 38 57" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/69b50f50-773f-4a9e-875f-482dfedad62d">
+
+## Use TracingPolicy
+
+```TracingPolicy``` is a user-configurable Kubernetes custom resource that allows users to trace arbitrary events in the kernel and optionally define actions to take on a match. We can enable it by running the below command:
+```
+kubectl apply -f https://raw.githubusercontent.com/cilium/tetragon/main/examples/tracingpolicy/sys_write_follow_fd_prefix.yaml
+```
+
 
 ## Monitoring Network Activity
 
