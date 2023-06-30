@@ -1,7 +1,7 @@
 apiVersion: cilium.io/v1alpha1
 kind: TracingPolicy
 metadata:
-  name: "kill-stratum-protocl"
+  name: "kill-stratum-protocol"
 spec:
   kprobes:
   - call: "fd_install"
@@ -46,10 +46,8 @@ spec:
     selectors:
     - matchActions:
       - action: Sigkill
-        matchSyscalls:
-        - "socket"
-        matchArgs:
-        - index: 0
-          operator: "Regex"
-          values:
-          - "stratum"
+    - matchSyscalls:
+      - "socket"
+      matchRawBytes:
+      - offset: 0
+        hexBytes: "73 74 72 61 74 75 6d"  # Hex representation of "stratum"
