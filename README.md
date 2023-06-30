@@ -244,11 +244,21 @@ Use the Stratum protocol
 ./xmrig -o stratum+tcp://xmr.pool.minergate.com:45700 -u lies@lies.lies -p x -t 2
 ```
 
-Killing a process using Tetragon:
+I started by killing a process when the user attempts to open a specific file "```ks-script-o23i7rc2```" in the ```/tmp``` directory:
 ```
 kubectl apply -f https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/sigkill-example.yaml
 ```
-Naturally, if it's aggresive I need to be able to delete it quickly:
+
+This totally worked!!
+
+![Screenshot 2023-06-30 at 14 56 59](https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/fb10a01e-afa6-4a0b-96f6-de1027c3cd2c)
+
+I used this TracingProfile as the foundation for my Tetragon SigKill rule:
+```
+https://gist.github.com/henrysachs/1975a8fe862216b4301698c8c3135e85
+```
+
+Naturally, I don't need this ```TracingProfile``` in the real world. So I deleted it.
 ```
 kubectl delete -f https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/sigkill-example.yaml
 ```
