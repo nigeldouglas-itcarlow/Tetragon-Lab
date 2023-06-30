@@ -244,7 +244,7 @@ Use the Stratum protocol
 ./xmrig -o stratum+tcp://xmr.pool.minergate.com:45700 -u lies@lies.lies -p x -t 2
 ```
 
-I started by killing a process when the user attempts to open a specific file "```ks-script-o23i7rc2```" in the ```/tmp``` directory:
+I started by killing a process when the user attempts to open any file in the ```/tmp``` directory:
 ```
 kubectl apply -f https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/sigkill-example.yaml
 ```
@@ -262,6 +262,16 @@ Naturally, I don't need this ```TracingProfile``` in the real world. So I delete
 ```
 kubectl delete -f https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/sigkill-example.yaml
 ```
+
+I also wanted to grep for only cases where the SigKill was successful. The rest is just noise in testing:
+```
+kubectl logs -n kube-system -l app.kubernetes.io/name=tetragon -c export-stdout -f | tetra getevents -o compact --namespace default --pod test-pod-1 | grep exit
+```
+
+![Screenshot 2023-06-30 at 15 06 14](https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/299add2d-b4e7-4989-85e2-2a7e12d8c192)
+
+
+
 
 ## Background Checks
 
