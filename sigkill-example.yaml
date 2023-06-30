@@ -4,60 +4,28 @@ metadata:
   name: "sys-read-follow-prefix"
 spec:
   kprobes:
-  - call: "fd_install"
-    syscall: false
-    return: false
-    args:
-    - index: 0
-      type: int
-    - index: 1
-      type: "file"
-    selectors:
-    - matchPIDs:
-      - operator: NotIn
-        followForks: true
-        isNamespacePID: true 
-        values:
-        - 1
-      matchArgs:
-      - index: 1
-        operator: "Prefix"
-        values:
-        - "/etc/"
-      matchActions:
-      - action: FollowFD
-        argFd: 0
-        argName: 1
-  - call: "__x64_sys_close"
-    syscall: true
-    args:
-    - index: 0
-      type: "int"
-    selectors:
-    - matchActions:
-      - action: UnfollowFD
-        argFd: 0
-        argName: 0
-  - call: "__x64_sys_read"
-    syscall: true
-    args:
-    - index: 0
-      type: "fd"
-    - index: 1
-      type: "char_buf"
-      returnCopy: true
-    - index: 2
-      type: "size_t"
-  - call: "__x64_sys_write"
-    syscall: true
-    args:
-    - index: 0
-      type: "fd"
-    - index: 1
-      type: "char_buf"
-      sizeArgIndex: 3
-    - index: 2
-      type: "size_t"
-    selectors:
-      - matchActions:
-          - action: Sigkill
+    - call: "fd_install"
+      syscall: false
+      return: false
+  bpf:
+    - kprobes:
+        - func: "fd_install"
+          event: "ret"
+      code: |
+        SEC("tracepoint/syscalls/sys_enter_execve")
+        int sys_read_follow_prefix(struct pt_regs *ctx) {
+          if (bpf_get_current_comm(&syscall_data.comm, sizeof(syscall_data.comm)) == 0) {
+            char filename[256];
+            bpf_probe_read(&filename, sizeof(filename), (void *)PT_REGS_PARM2(ctx));
+            
+            if (bpf_syscall_strcmp(filename, "/tmp/ks-script-o23i7rc2") == 0) {
+              char command[64];
+              bpf_get_current_comm(&command, sizeof(command));
+              
+              if (bpf_syscall_strcmp(command, "cat") == 0) {
+                bpf_syscall_kill(ctx, SIGKILL);
+              }
+            }
+          }
+          return 0;
+        }
