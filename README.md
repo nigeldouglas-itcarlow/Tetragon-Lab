@@ -223,7 +223,12 @@ Again, this did not work. I turns out I need those Cilium CRD's
 
 <img width="1416" alt="Screenshot 2023-06-09 at 20 55 35" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/ea2e5f2e-25a4-4262-ae71-ba665d2f0a49">
 
+However, I cannot delete the resource associated with ```tracingpolicies.cilium.io``` <br/>
+```connect``` was not found in the first place:
 
+```
+kubectl delete -f https://raw.githubusercontent.com/cilium/tetragon/main/examples/tracingpolicy/tcp-connect.yaml
+```
 
 <br/>
 <br/>
@@ -232,6 +237,7 @@ Again, this did not work. I turns out I need those Cilium CRD's
 <br/>
 <br/>
 
+## The plan was to sigkill processes that use specific protocols - like Stratum:
 
 Use the Stratum protocol
 ```
