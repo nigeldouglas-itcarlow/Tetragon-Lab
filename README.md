@@ -244,6 +244,15 @@ Use the Stratum protocol
 ./xmrig -o stratum+tcp://xmr.pool.minergate.com:45700 -u lies@lies.lies -p x -t 2
 ```
 
+Killing a process using Tetragon:
+```
+kubectl apply -f https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/sigkill-example.yaml
+```
+Naturally, if it's aggresive I need to be able to delete it quickly:
+```
+kubectl delete -f https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/sigkill-example.yaml
+```
+
 ## Background Checks
 
 Confirm that ```AWS CLI``` is connected to your ```EKS Cluster``` in order to work from terminal. 
