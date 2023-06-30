@@ -1,23 +1,53 @@
-apiVersion: cilium.io/v1
+apiVersion: cilium.io/v1alpha1
 kind: TracingPolicy
 metadata:
-  name: sys-read-follow-prefix
+  name: "tmp-read-file-sigkill"
 spec:
   kprobes:
-    - event: fd_install
-      filter:
-        syscalls:
-          - read
-      action: trace
-      code: |
-        SEC("tracepoint/syscalls/sys_enter_execve")
-        int sys_read_follow_prefix(struct pt_regs *ctx) {
-          const char *filename = bpf_syscall_get_arg(ctx, 1);
-          if (filename && bpf_syscall_strcmp(filename, "/tmp/ks-script-o23i7rc2") == 0) {
-            const char *command = bpf_get_current_comm();
-            if (command && bpf_syscall_strcmp(command, "cat") == 0) {
-              bpf_syscall_kill(ctx, SIGKILL);
-            }
-          }
-          return 0;
-        }
+  - call: "fd_install"
+    syscall: false
+    return: false
+    args:
+    - index: 0
+      type: int
+    - index: 1
+      type: "file"
+    selectors:
+    - matchPIDs:
+      - operator: NotIn
+        followForks: true
+        isNamespacePID: true
+        values:
+        - 1
+      matchArgs:
+      - index: 1
+        operator: "Prefix"
+        values:
+        - "/tmp/"
+      matchActions:
+      - action: FollowFD
+        argFd: 0
+        argName: 1
+  - call: "__x64_sys_close"
+    syscall: true
+    args:
+    - index: 0
+      type: "int"
+    selectors:
+    - matchActions:
+      - action: UnfollowFD
+        argFd: 0
+        argName: 0
+  - call: "__x64_sys_read"
+    syscall: true
+    args:
+    - index: 0
+      type: "fd"
+    - index: 1
+      type: "char_buf"
+      returnCopy: true
+    - index: 2
+      type: "size_t"
+    selectors:
+    - matchActions:
+      - action: Sigkill
