@@ -1,7 +1,7 @@
 apiVersion: cilium.io/v1alpha1
 kind: TracingPolicy
 metadata:
-  name: "tmp-hide-file-sigkill"
+  name: "tmp-hide-files-sigkill"
 spec:
   kprobes:
   - call: "fd_install"
@@ -38,20 +38,19 @@ spec:
       - action: UnfollowFD
         argFd: 0
         argName: 0
-  - call: "__x64_sys_read"
+  - call: "__x64_sys_open"
     syscall: true
     args:
     - index: 0
-      type: "fd"
-    - index: 1
       type: "char_buf"
-      returnCopy: true
+    - index: 1
+      type: "int"
     - index: 2
-      type: "size_t"
+      type: "int"
     selectors:
     - matchActions:
       - action: Sigkill
         checkArgs:
-        - index: 1
-          operator: "Contains"
+        - index: 0
+          operator: "Prefix"
           value: "/tmp/."
