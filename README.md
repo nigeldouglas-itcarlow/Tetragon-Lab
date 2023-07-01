@@ -270,8 +270,50 @@ kubectl logs -n kube-system -l app.kubernetes.io/name=tetragon -c export-stdout 
 
 ![Screenshot 2023-06-30 at 15 06 14](https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/299add2d-b4e7-4989-85e2-2a7e12d8c192)
 
+## Testing DNS Policy
 
+Installing a suspicious networking tool like telnet
+```
+yum install telnet telnet-server -y
+```
+If this fails, just apply a few modifications to the registry management:
+```
+cd /etc/yum.repos.d/
+```
+```
+sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+```
+Update the yum registry manager:
+```
+yum update -y
+```
+Now, try to install telnet and telnet server from the registry manager:
+```
+yum install telnet telnet-server -y
+```
+```
+yum install bind-utils
+```
+In general, you can search for the ```nslookup``` package provides a command using the yum provides command:
+```
+yum provides '*bin/nslookup'
+```
+Just to generate the detection, run nslookup or ```telnet```:
+```
+nslookup ebpf.io
+```
 
+```
+telnet
+```
+Let's also test tcpdump to prove the macro is working:
+```
+yum install tcpdump -y
+tcpdump -D
+tcpdump --version
+tcpdump -nnSX port 443
+```
 
 ## Background Checks
 
