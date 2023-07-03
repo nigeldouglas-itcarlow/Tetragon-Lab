@@ -1,57 +1,20 @@
 apiVersion: cilium.io/v1alpha1
 kind: TracingPolicy
 metadata:
-  name: "tmp-read-file-sigkill"
+  name: "xmrig-cmd-sigkill"
 spec:
   kprobes:
-  - call: "fd_install"
-    syscall: false
-    return: false
+  - call: "sys_execve"
+    syscall: true
     args:
     - index: 0
-      type: int
-    - index: 1
-      type: "file"
+      type: "string"
     selectors:
-    - matchPIDs:
-      - operator: NotIn
-        followForks: true
-        isNamespacePID: true
-        values:
-        - 1
-      matchArgs:
+    - matchArgs:
       - index: 1
-        operator: "Prefix"
-        values:
-        - "/tmp/"
-      matchActions:
-      - action: FollowFD
-        argFd: 0
-        argName: 1
-  - call: "__x64_sys_close"
-    syscall: true
-    args:
-    - index: 0
-      type: "int"
-    selectors:
-    - matchActions:
-      - action: UnfollowFD
-        argFd: 0
-        argName: 0
-  - call: "__x64_sys_read"
-    syscall: true
-    args:
-    - index: 0
-      type: "fd"
-    - index: 1
-      type: "char_buf"
-      returnCopy: true
-    - index: 2
-      type: "size_t"
-    selectors:
-    - matchActions:
-      - action: Sigkill
-        argName: 1
         operator: "Equal"
         values:
         - "xmrig"
+    selectors:
+    - matchActions:
+      - action: Sigkill
