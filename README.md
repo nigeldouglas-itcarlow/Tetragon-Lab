@@ -126,6 +126,22 @@ We receive a bunch of process activity after we shell into the pod. <br/>
 However, the data is not so usefil in its current state.
 <img width="1416" alt="Screenshot 2023-06-09 at 20 33 20" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/d9ab78ab-3dd3-405f-8391-0ced449d4bcc">
 
+## Creating the first TracingPolicy with Sigkill action
+```TracingPolicy``` is a user-configurable Kubernetes custom resource that allows users to trace arbitrary events in the kernel and optionally define actions to take on a match. We can enable it by running the below command:
+<br/><br/>
+I started by killing a process when the user attempts to open any file in the ```/tmp``` directory:
+```
+kubectl apply -f https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/sigkill-example.yaml
+```
+If you don't need the profile that detects ```cat``` attempts on files in temp, you can delete it:
+```
+kubectl delete tracingpolicies tmp-read-file-sigkill
+```
+
+![Screenshot 2023-07-03 at 14 09 20](https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/7850805a-f25c-4dec-a186-194c04ada909)
+
+
+## Cryptomining Workload (In-Progress)
 
 Download the ```xmrig``` binary from the official Github repository:
 ```
@@ -164,28 +180,9 @@ After performing each of the tasks, we realize that further testing is required:
 
 <img width="1416" alt="Screenshot 2023-06-09 at 20 38 57" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/69b50f50-773f-4a9e-875f-482dfedad62d">
 
-## Use TracingPolicy
-
-```TracingPolicy``` is a user-configurable Kubernetes custom resource that allows users to trace arbitrary events in the kernel and optionally define actions to take on a match. We can enable it by running the below command:
-```
-kubectl apply -f https://raw.githubusercontent.com/cilium/tetragon/main/examples/tracingpolicy/sys_write_follow_fd_prefix.yaml
-```
-
-After enabling TracingPolicy, I have far more insight into when files are opened/closed - which is a good start:
-
-<img width="1416" alt="Screenshot 2023-06-09 at 20 43 27" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/40e48e36-ec51-4a87-84f5-07d12d7287ec">
-
-When my shell session did crash, probably due to the sleep configuration, it sent the ```SIGKILL``` action:
-
-<img width="1416" alt="Screenshot 2023-06-09 at 20 47 14" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/9d27c956-6515-43b0-b6ed-59257b07eabf">
-
-To disable the TracingPolicy run:
-```
-kubectl delete -f https://raw.githubusercontent.com/cilium/tetragon/main/examples/tracingpolicy/sys_write_follow_fd_prefix.yaml
-```
 
 
-## Monitoring Network Activity
+## Monitoring Network Activity (Resource Not Found)
 
 To view TCP connect events, apply the example TCP connect TracingPolicy:
 ```
