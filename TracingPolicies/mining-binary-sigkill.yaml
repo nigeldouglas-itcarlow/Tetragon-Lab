@@ -14,7 +14,7 @@ spec:
       - index: 1
         operator: "Equal"
         values:
-        - "./xmrig"
+        - ./xmrig
     selectors:
     - matchActions:
       - action: Sigkill
