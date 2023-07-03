@@ -1,0 +1,33 @@
+apiVersion: cilium.io/v1alpha1
+kind: TracingPolicy
+metadata:
+  name: "kubectl-exec-sigkill"
+spec:
+  kprobes:
+  - call: "sys_execve"
+    syscall: true
+    args:
+    - index: 0
+      type: "string"
+    selectors:
+    - matchArgs:
+      - index: 0
+        operator: "Equal"
+        values:
+        - "kubectl"
+      - index: 1
+        operator: "Equal"
+        values:
+        - "exec"
+      - index: 2
+        operator: "Equal"
+        values:
+        - "-it"
+      matchCapabilities:
+      - type: Effective
+        operator: In
+        values:
+        - "CAP_SYS_ADMIN"
+    selectors:
+    - matchActions:
+      - action: Sigkill
