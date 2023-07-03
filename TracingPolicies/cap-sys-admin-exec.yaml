@@ -11,10 +11,6 @@ spec:
       type: "string"
     selectors:
     - matchArgs:
-      - index: 0
-        operator: "Equal"
-        values:
-        - "kubectl"
       - index: 1
         operator: "Equal"
         values:
