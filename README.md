@@ -265,7 +265,7 @@ kubectl delete -f https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetrag
 
 I also wanted to grep for only cases where the SigKill was successful. The rest is just noise in testing:
 ```
-kubectl logs -n kube-system -l app.kubernetes.io/name=tetragon -c export-stdout -f | tetra getevents -o compact --namespace default --pod test-pod-1 | grep exit
+kubectl logs -n kube-system -l app.kubernetes.io/name=tetragon -c export-stdout -f | tetra getevents -o compact --namespace default --pod nigel-app | grep exit
 ```
 
 ![Screenshot 2023-06-30 at 15 06 14](https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/299add2d-b4e7-4989-85e2-2a7e12d8c192)
