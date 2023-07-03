@@ -230,12 +230,54 @@ However, I cannot delete the resource associated with ```tracingpolicies.cilium.
 kubectl delete -f https://raw.githubusercontent.com/cilium/tetragon/main/examples/tracingpolicy/tcp-connect.yaml
 ```
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+## CAP_SYS_ADMIN Test (Failed)
+
+The goal was to prevent users from shelling into a over-permissive workload (CAP_SYS_ADMIN privileges). <br/>
+It works in the sense that I get an intrnal error, but it does not perform the sigkill action correctly.
+
+```
+apiVersion: cilium.io/v1alpha1
+kind: TracingPolicy
+metadata:
+  name: "kubectl-exec-sigkill"
+spec:
+  kprobes:
+  - call: "sys_execve"
+    syscall: true
+    args:
+    - index: 0
+      type: "string"
+    selectors:
+    - matchArgs:
+      - index: 0
+        operator: "Equal"
+        values:
+        - "kubectl"
+      - index: 1
+        operator: "Equal"
+        values:
+        - "exec"
+      - index: 2
+        operator: "Equal"
+        values:
+        - "-it"
+      matchCapabilities:
+      - type: Effective
+        operator: In
+        values:
+        - "CAP_SYS_ADMIN"
+    selectors:
+    - matchActions:
+      - action: Sigkill
+```
+
+In fact, I get inconsistent results. In one case, I could shell in immediately <br/>
+However, sigkill was performed on all actions except moving between directories. <br/>
+I was unable to shell back into the running workload after I had exited the workload
+
+![Screenshot 2023-07-03 at 11 08 29](https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/a4269e53-dd46-412e-8a5e-ebe92f7b7a6a)
+
+
 
 ## The plan was to sigkill processes that use specific protocols - like Stratum:
 
