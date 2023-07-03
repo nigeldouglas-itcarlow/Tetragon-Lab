@@ -120,7 +120,7 @@ We are already alerted on the fact that our pod has elevated admin privileges - 
 
 In the first window, terminal shell into the overly-permissive pod:
 ```
-kubectl exec -it test-pod-1 -- bash
+kubectl exec -it nigel-app -- bash
 ```
 We receive a bunch of process activity after we shell into the pod. <br/>
 However, the data is not so usefil in its current state.
