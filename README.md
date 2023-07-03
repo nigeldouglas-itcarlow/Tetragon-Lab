@@ -140,6 +140,11 @@ kubectl delete tracingpolicies tmp-read-file-sigkill
 
 ![Screenshot 2023-07-03 at 14 09 20](https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/7850805a-f25c-4dec-a186-194c04ada909)
 
+Output if the Policy is applied successfully:
+
+![Screenshot 2023-07-03 at 14 14 14](https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/eb78d47b-dffc-4726-aa34-8709db7b4ebd)
+
+
 
 ## Cryptomining Workload (In-Progress)
 
