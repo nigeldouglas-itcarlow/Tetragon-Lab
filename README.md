@@ -196,7 +196,8 @@ kubectl apply -f https://raw.githubusercontent.com/cilium/tetragon/main/examples
 
 We can see the miner connections were tracked in Tetragon:
 
-<img width="1423" alt="Screenshot 2023-07-04 at 10 49 02" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/82ac0a5a-a123-469d-98c6-98092b45fcea">
+<img width="1423" alt="Screenshot 2023-07-04 at 10 49 02" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/adaea533-d5bf-451c-8fd3-8e39fb808f18">
+
 
 
 If you don't need network obseravbility any longer, it can be removed:
