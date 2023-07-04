@@ -187,46 +187,19 @@ After performing each of the tasks, we realize that further testing is required:
 
 
 
-## Monitoring Network Activity (Resource Not Found)
+## Monitoring Network Activity
 
 To view TCP connect events, apply the example TCP connect TracingPolicy:
 ```
 kubectl apply -f https://raw.githubusercontent.com/cilium/tetragon/main/examples/tracingpolicy/tcp-connect.yaml
 ```
 
-The TracingPolicy "connect" is invalid: <br/>
-* spec.kprobes[0].selectors[0].matchArgs[0].operator: Unsupported value: "DAddr": supported values: "Equal", "NotEqual", "Prefix", "Postfix" <br/>
-<br/>
+We can see the miner connections were tracked in Tetragon:
 
-Apparently there's an operator that installs the CRD, so you need to update the operator container image that will include the new CRD as well. 
-```
-helm -n kube-system upgrade \
---install tetragon cilium/tetragon \
---set tetragon.image.override=quay.io/cilium/tetragon-ci:latest \
---set tetragonOperator.image.override=quay.io/cilium/tetragon-operator-ci:latest \
---set imagePullPolicy=Always
-```
-I did this to no change:
-
-<img width="1416" alt="Screenshot 2023-06-09 at 20 53 25" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/85d76a31-f780-45c2-ac45-95587e6f144d">
+<img width="1423" alt="Screenshot 2023-07-04 at 10 49 02" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/82ac0a5a-a123-469d-98c6-98092b45fcea">
 
 
-Need to make sure that the CRDs are updated <br/>
-You can delete them and restart the tetragon pod if they are not. <br/>
-<br/>
-Looks like you need to delete the old CRD created from earlier run of Tetra:
-```
-kubectl delete crd tracingpoliciesnamespaced.cilium.io
-kubectl delete crd tracingpolicies.cilium.io
-```
-and reinstalling Tetra should allow you to create network policy. <br/>
-Again, this did not work. I turns out I need those Cilium CRD's
-
-
-<img width="1416" alt="Screenshot 2023-06-09 at 20 55 35" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/ea2e5f2e-25a4-4262-ae71-ba665d2f0a49">
-
-However, I cannot delete the resource associated with ```tracingpolicies.cilium.io``` <br/>
-```connect``` was not found in the first place:
+If you don't need network obseravbility any longer, it can be removed:
 
 ```
 kubectl delete -f https://raw.githubusercontent.com/cilium/tetragon/main/examples/tracingpolicy/tcp-connect.yaml
