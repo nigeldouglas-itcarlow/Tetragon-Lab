@@ -11,10 +11,9 @@ spec:
       type: "string"
     selectors:
     - matchArgs:
-      - index: 1
+      - index: 0
         operator: "Equal"
         values:
         - ./xmrig
-    selectors:
-    - matchActions:
+      matchActions:
       - action: Sigkill
