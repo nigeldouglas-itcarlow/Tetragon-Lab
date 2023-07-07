@@ -198,7 +198,8 @@ Run the cryptominer in background mode (this won't show anything in your shell)
 
 After running ```./xmrig```, the ```sigkill``` action is performed on the binary:
 
-<img width="967" alt="Screenshot 2023-07-07 at 10 35 29" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/15e47a2b-c7fd-4bf5-a64d-ab4dd5716ebd">
+
+<img width="967" alt="Screenshot 2023-07-07 at 10 35 29" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/5a62ebfa-4a85-464e-a684-8bce505589f3">
 
 
 
