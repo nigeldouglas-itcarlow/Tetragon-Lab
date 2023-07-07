@@ -146,7 +146,22 @@ Output if the Policy is applied successfully:
 
 
 
-## Cryptomining Workload (In-Progress)
+## Cryptomining Workload (Working)
+
+Download the cryptomining '```xmrig```' scenario for now:
+```
+https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/TracingPolicies/mining-binary-sigkill.yaml
+```
+
+Confirm the file is formatted correctly:
+```
+cat mining-binary-sigkill.yaml
+```
+
+Apply the file
+```
+kubectl apply -f mining-binary-sigkill.yaml
+```
 
 Download the ```xmrig``` binary from the official Github repository:
 ```
@@ -181,9 +196,10 @@ Run the cryptominer in background mode (this won't show anything in your shell)
 ./xmrig --donate-level 8 -o xmr-us-east1.nanopool.org:14433 -u 422skia35WvF9mVq9Z9oCMRtoEunYQ5kHPvRqpH1rGCv1BzD5dUY4cD8wiCMp4KQEYLAN1BuawbUEJE99SNrTv9N9gf2TWC --tls --coin monero
 ```
 
-After performing each of the tasks, we realize that further testing is required:
+After running ```./xmrig```, the ```sigkill``` action is performed on the binary:
 
-<img width="1416" alt="Screenshot 2023-06-09 at 20 38 57" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/69b50f50-773f-4a9e-875f-482dfedad62d">
+<img width="967" alt="Screenshot 2023-07-07 at 10 35 29" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/15e47a2b-c7fd-4bf5-a64d-ab4dd5716ebd">
+
 
 
 
