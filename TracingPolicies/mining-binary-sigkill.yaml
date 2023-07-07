@@ -1,25 +1,25 @@
 apiVersion: cilium.io/v1alpha1
 kind: TracingPolicy
 metadata:
-  name: "raw-syscalls"
+  name: raw-syscalls
 spec:
   tracepoints:
-    - subsystem: "raw_syscalls"
-      event: "sys_exit"
+    - subsystem: raw_syscalls
+      event: sys_exit
       # args: syscall id
       args:
       - index: 4
-        type: "int64"
+        type: int64
       selectors:
       - matchArgs:
         - index: 4
-          operator: "Equal"
+          operator: Equal
           values:
-          - 59
-          - 322
+          - "59"
+          - "322"
         matchBinaries:
-        - operator: "In"
+        - operator: In
           values:
           - "./xmrig"
         matchActions:
-        - action: SigKill
+        - action: Sigkill
