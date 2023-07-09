@@ -25,6 +25,7 @@ spec:
           - "./titcoind"
           - "./cpuminer"
           - "./nanominer"
+          - "./minerd"
           - "./pwnrig"
           - "./ccminer"
         matchActions:
