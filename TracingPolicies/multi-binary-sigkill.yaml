@@ -21,10 +21,11 @@ spec:
         - operator: In
           values:
           - "./xmrig"
-          - "kill_miner"
-          - "titcoind"
-          - "nanominer"
-          - "pwnrig"
+          - "./kill_miner"
+          - "./titcoind"
+          - "./cpuminer"
+          - "./nanominer"
+          - "./pwnrig"
           - "./ccminer"
         matchActions:
         - action: Sigkill
