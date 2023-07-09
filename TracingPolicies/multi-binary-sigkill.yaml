@@ -20,12 +20,11 @@ spec:
         matchBinaries:
         - operator: In
           values:
-          - "xmrig"
-          - ".x1mr"
+          - "./xmrig"
           - "kill_miner"
           - "titcoind"
           - "nanominer"
           - "pwnrig"
-          - "ccminer"
+          - "./ccminer"
         matchActions:
         - action: Sigkill
