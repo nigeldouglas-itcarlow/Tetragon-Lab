@@ -351,6 +351,13 @@ tcpdump -nnSX port 443
 ```
 
 ## Testing Multi-Binary Mining Protection
+```
+kubectl apply -f https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/privileged-pod.yaml
+```
+
+```
+kubectl exec -it nigel-app -- bash
+```
 
 ```
 wget https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/TracingPolicies/multi-binary-sigkill.yaml
