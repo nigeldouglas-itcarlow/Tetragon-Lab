@@ -379,6 +379,36 @@ tar -xf pooler-cpuminer-2.5.1-linux-x86_64.tar.gz
 
 <img width="824" alt="Screenshot 2023-07-09 at 22 26 04" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/73926349-34e8-47b5-be55-7e72a8d2f934">
 
+### Understanding System Calls
+
+In the given configuration for the raw system call subsystem, the values "59" and "322" represent specific syscall IDs that are being monitored for the sys_exit event.
+<br/><br/>
+Each system call in Linux is assigned a unique ID, and these IDs are used to identify and differentiate between different system calls. The syscall ID is an integral part of the tracing process as it allows the system to identify the specific system call being executed.
+<br/><br/>
+In this case, the configuration is monitoring the sys_exit event for syscall ID 59 and syscall ID 322. By specifying these syscall IDs, the tracepoints will capture and log information when these specific system calls are exited.
+
+```
+spec:
+  tracepoints:
+    - subsystem: raw_syscalls
+      event: sys_exit
+      # args: syscall id
+      args:
+      - index: 4
+        type: int64
+      selectors:
+      - matchArgs:
+        - index: 4
+          operator: Equal
+          values:
+          - "59"
+          - "322"
+```
+
+The args section specifies the argument for the syscall being monitored. In this case, the syscall ID is located at index 4, and the type is specified as int64. This information helps to ensure that the correct value is captured and processed when tracing the sys_exit event for the specified syscall IDs.
+<br/><br/>
+Please note that the values "59" and "322" correspond to specific system calls in the Linux kernel. The exact meaning and purpose of these system calls can vary depending on the specific Linux distribution and version you are using. You can refer to the Linux kernel documentation or relevant resources to understand the specific functionality associated with these syscall IDs in your environment.
+
 
 ## Background Checks
 
