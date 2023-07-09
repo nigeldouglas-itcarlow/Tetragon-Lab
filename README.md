@@ -350,6 +350,30 @@ tcpdump --version
 tcpdump -nnSX port 443
 ```
 
+## Testing Multi-Binary Mining Protection
+
+```
+wget https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/TracingPolicies/multi-binary-sigkill.yaml
+cat multi-binary-sigkill.yaml
+```
+After you've run ```kubectl apply -f``` on the above ```TracingPolicy```, we can exec back into the ```nigel-app``` pod. <br/>
+From here we can download and run the second ```cpuminer``` binary.
+```
+curl -LO https://github.com/tpruvot/cpuminer-multi/releases/download/v1.3.8/cpuminer-multi-1.3.8.tar.gz
+```
+
+```
+tar -xf cpuminer-multi-1.3.8.tar.gz
+```
+
+```
+cd cpuminer-multi-1.3.8
+```
+
+```
+./cpuminer -a <algorithm> -o <pool-url> -u <username> -p <password>
+```
+
 ## Background Checks
 
 Confirm that ```AWS CLI``` is connected to your ```EKS Cluster``` in order to work from terminal. 
