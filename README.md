@@ -374,12 +374,11 @@ tar -xf pooler-cpuminer-2.5.1-linux-x86_64.tar.gz
 ```
 
 ```
-cd cpuminer-2.5.1
-```
-
-```
 ./minerd -a scrypt -o stratum+tcp://pool.example.com:3333 -u johnsmith.worker1 -p mysecretpassword
 ```
+
+<img width="824" alt="Screenshot 2023-07-09 at 22 26 04" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/73926349-34e8-47b5-be55-7e72a8d2f934">
+
 
 ## Background Checks
 
