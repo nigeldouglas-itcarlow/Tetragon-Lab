@@ -54,7 +54,6 @@ spec:
     selectors:
     - matchActions:
       - action: Sigkill
-        allow: false  # Disallow reading
   - call: "__x64_sys_write"
     syscall: true
     args:
@@ -68,7 +67,3 @@ spec:
     selectors:
     - matchActions:
       - action: Sigkill
-        allow: false  # Disallow writing
-
-# Example taken from Falco.org
-# https://github.com/falcosecurity/rules/blob/c558fc7d2d02cc2c2edc968fe5770d544f1a9d55/rules/falco_rules.yaml#L307
