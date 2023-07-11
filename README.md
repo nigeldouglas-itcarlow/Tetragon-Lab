@@ -379,6 +379,17 @@ tar -xf pooler-cpuminer-2.5.1-linux-x86_64.tar.gz
 
 <img width="824" alt="Screenshot 2023-07-09 at 22 26 04" src="https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/73926349-34e8-47b5-be55-7e72a8d2f934">
 
+## Reading Sensitive Files
+
+Working on this new TracingPolicy - but I am unable to kill read/write activity on sensitive files listed here: <br/>
+https://github.com/falcosecurity/rules/blob/c558fc7d2d02cc2c2edc968fe5770d544f1a9d55/rules/falco_rules.yaml#L307C1-L308C82
+```
+kubectl apply -f https://raw.githubusercontent.com/nigeldouglas-itcarlow/Tetragon-Lab/main/TracingPolicies/read-sensitive-files.yaml
+```
+
+![Screenshot 2023-07-11 at 11 13 11](https://github.com/nigeldouglas-itcarlow/Tetragon-Lab/assets/126002808/287467c4-3f3d-46dc-ba8e-7d4777f35b91)
+
+
 ### Understanding System Calls
 
 In the given configuration for the raw system call subsystem, the values "59" and "322" represent specific syscall IDs that are being monitored for the sys_exit event.
